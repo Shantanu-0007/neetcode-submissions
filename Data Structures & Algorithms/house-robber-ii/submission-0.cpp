@@ -1,0 +1,18 @@
+class Solution {
+    int helper(vector<int>& nums, int n, int st, int end){
+        vector<int> dp(n+1);
+        dp[0] = nums[st];
+        dp[1] = max(nums[st], nums[st+1]);
+        for(int i=st+2,j=2; i<=end; i++,j++){
+            dp[j] = max(dp[j-1], dp[j-2]+nums[i]);
+        }
+        return dp[n-2];
+    }
+public:
+    int rob(vector<int>& nums) {
+        int n = nums.size();
+        if(nums.size() == 1) return nums[0];
+        if(nums.size() == 2) return max(nums[0], nums[1]);
+        return max(helper(nums, n, 0, n-2), helper(nums, n, 1, n-1));
+    }
+};
